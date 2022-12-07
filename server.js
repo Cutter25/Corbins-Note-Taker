@@ -1,33 +1,42 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const notes = require('./Develop/db/db.json');
 const PORT = process.env.port || 3001;
 
 app.use(express.urlencoded({ extended: true }));
+
+// express.json will allow for any json to be parsed through so we can do something with it!
+
 app.use(express.json());
 
-// express middleware for static assets in the public directory
+// express middleware for static assets (front-end files) in the public directory!
 
 app.use(express.static('public'));
 
 
-// get routes
+// get routes!
 
-app.get('/', (req, res) =>
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'))
-);
+});
 
-app.get('/notes', (req, res) =>
+app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/notes.html'))
-);
+});
 
-// get route that matches the fetch from the front-end (basically our own API call) :)
+// get route that matches the fetch from the front-end! (index.js) (basically our own API call) :)
 
 app.get('/api/notes', (req, res) => res.json(notes));
 
-// post route
+// post routes!
 
-// app.post('/api/notes', (req, res) => 
+app.post('/api/notes', (req, res) => {
+  console.info(`${req.method} recieved and post request is working!`)
+});
+
+
+
 
 // app.post('/db', (req, res) => {
 
