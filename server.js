@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const port = 3001;
+const PORT = 3001;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -15,9 +15,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/notes', (req, res) => {
+app.get('/api/notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'notes.html'));
 });
+
+// post route
 
 app.post('/db', (req, res) => {
 
@@ -35,7 +37,8 @@ app.post('/db', (req, res) => {
     res.json('Request body must at least contain a note!');
   }
 
-  // Log the response body to the console
+  // log response body to the console
+  
   console.log(req.body);
 });
 
@@ -56,5 +59,5 @@ app.post('/db', (req, res) => {
 
 
 app.listen(PORT, () =>
-  console.log(`Note Taker app listening at http://localhost:${3001}`)
+  console.log(`Note Taker app listening at http://localhost:${PORT}`)
 );
