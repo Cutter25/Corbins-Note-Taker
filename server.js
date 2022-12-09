@@ -1,7 +1,7 @@
-const { response } = require('express');
 const express = require('express');
 const app = express();
 const path = require('path');
+const fs = require('fs');
 const notes = require('./db/db.json');
 const PORT = process.env.port || 3001;
 
@@ -18,13 +18,13 @@ app.use(express.static('public'));
 
 // get routes!
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) => 
   res.sendFile(path.join(__dirname, '/public/index.html'))
-});
+);
 
-app.get('/', (req, res) => {
+app.get('/notes', (req, res) => 
   res.sendFile(path.join(__dirname, '/public/notes.html'))
-});
+);
 
 // get route that matches the fetch from the front-end! (index.js) (basically our own API call) :)
 
@@ -44,6 +44,19 @@ app.post('/api/notes', (req, res) => {
       title,
       text,
     };
+
+// converting the JSON from newNote to a string to write to the db.json file.
+
+const noteString = JSON.stringify(newNote);
+
+fs.writeToFile(`./db.json${newNote}.json`, noteString, (err) =>
+  err
+    ? console.error(err)
+    : console.log(
+    `Your new note, ${newReview.product} , has been written to the db.json file`
+    )
+  );
+
 
     const response = {
       status: 'Success!',
