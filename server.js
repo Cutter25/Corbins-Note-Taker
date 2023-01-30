@@ -28,7 +28,7 @@ app.get('/notes', (req, res) => {
 // Utilizing router
 
 app.use("/api", apiRoutes);
-app.use("/", apiRoutes);
+app.use("/", htmlRoutes);
 
 // Listening! :) "node server.js"
 
