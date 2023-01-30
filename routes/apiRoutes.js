@@ -4,12 +4,12 @@ const uuid = require('uuid');
 const { readFromFile, readAndAppend, writeToFile, } = require('../helpers/fsUtils');
   
 // GET all notes
-notes.get("/", (req, res) => {
+router.get("/", (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 // POST for new note
-notes.post("/notes", (req, res) => {
+router.post("/notes", (req, res) => {
     console.log(req.body);
 
     const { title, text } = req.body;
@@ -40,4 +40,4 @@ router.delete("/notes/:id", (req, res) => {
         });
 });
 
-module.exports = notes;
+module.exports = router;

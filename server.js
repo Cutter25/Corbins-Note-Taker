@@ -1,7 +1,6 @@
 // Requiring packages
 const express = require('express');
 const apiRoutes = require('./routes/apiRoutes');
-const htmlRoutes = require('./routes/htmlRoutes')
 
 const app = express();
 
@@ -15,23 +14,19 @@ app.use(express.json());
 // express middleware for static assets (front-end files) in the public directory!
 app.use(express.static('public'));
 
+// Utilizing router
+app.use("/api", apiRoutes);
 
 // get routes!
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/notes.html'));
+  res.sendFile(path.join(__dirname, 'notes.html'));
 });
 
-// Utilizing router
-
-app.use("/api", apiRoutes);
-app.use("/", htmlRoutes);
-
 // Listening! :) "node server.js"
-
 app.listen(PORT, () =>
   console.log(`Note Taker app listening at http://127.0.0.1:${PORT}, or http://localhost:${PORT}`)
 );
