@@ -1,27 +1,43 @@
 // Requiring
 const router = require('express').Router();
-const store = require('../db/store')
-
+const uuid = require('uuid');
+const { readFromFile, readAndAppend, writeToFile, } = require('../helpers/fsUtils');
+  
 // GET all notes
-router.get("/notes", (req, res) => {
-    store.getNotes()
-        .then(notes => res.json(notes))
-        .catch(err => res.status(500).json(err));
+notes.get("/", (req, res) => {
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 // POST for new note
-router.post("/notes", (req, res) => {
-    store.saveNote(req.body)
-        .then((note) => res.json(note))
-        .catch(err => res.status(500).json(err));
+notes.post("/notes", (req, res) => {
+    console.log(req.body);
+
+    const { title, text } = req.body;
+
+    if (req.body) {
+        const newNote = {
+            title,
+            text,
+            note_id: uuid(),
+        };
+
+        readAndAppend(newNote, './db/db.json');
+        res.json('Note successfully added!')
+    } else {
+        res.errored('Error saving note');
+    }
 });
 
 // DELETE route to delete notes based on a unique id
 router.delete("/notes/:id", (req, res) => {
-    store.deleteNote(req.params.id)
-        .then(() => res.json({ ok: true }))
-        console.log('Note successfully deleted!')
-        .catch(err => res.status(500).json(err));
+    const noteId = req.params.note_id;
+    readFromFile('./db/db.json')
+        .then((data) => JSON.parse(data))
+        .then((json) => {
+            const result = json.filter((note) => note.note_id !== noteId);
+            writeToFile('./db/db.json', result);
+            res.json(`Item ${noteId} has been deleted 🗑️`);
+        });
 });
 
-module.exports = router;
+module.exports = notes;
