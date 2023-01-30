@@ -1,15 +1,15 @@
 // Requiring
-const router = require('express').Router();
+const notes = require('express').Router();
 const uuid = require('uuid');
 const { readFromFile, readAndAppend, writeToFile, } = require('../helpers/fsUtils');
   
 // GET all notes
-router.get("/", (req, res) => {
+notes.get("/", (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 // POST for new note
-router.post("/notes", (req, res) => {
+notes.post("/notes", (req, res) => {
     console.log(req.body);
 
     const { title, text } = req.body;
@@ -29,7 +29,7 @@ router.post("/notes", (req, res) => {
 });
 
 // DELETE route to delete notes based on a unique id
-router.delete("/notes/:id", (req, res) => {
+notes.delete("/notes/:id", (req, res) => {
     const noteId = req.params.note_id;
     readFromFile('./db/db.json')
         .then((data) => JSON.parse(data))
@@ -40,4 +40,4 @@ router.delete("/notes/:id", (req, res) => {
         });
 });
 
-module.exports = router;
+module.exports = notes;
