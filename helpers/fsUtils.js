@@ -1,6 +1,7 @@
 // Requiring
 const fs = require('fs');
 const util = require('util');
+const { v4: uuidv4 } = require('uuid');
 
 const readFromFile = util.promisify(fs.readFile);
 
@@ -15,6 +16,9 @@ const readAndAppend = (note, db) => {
         console.error(err);
       } else {
         const parsedData = JSON.parse(data);
+        const id = "id";
+        const noteId = uuidv4();
+        note[id] = noteId;
         parsedData.push(note);
         writeToFile(db, parsedData);
       }

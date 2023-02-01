@@ -1,29 +1,25 @@
 // Requiring packages
 const express = require('express');
-const path = require('path');
-const api = require('./routes/index.js');
 
-const app = express();
+const homeRoutes = require('./routes/homeRoutes');
+
+const apiRoutes = require('./routes/apiRoutes');
+
+// const app = express();
 
 const PORT = process.env.port || 3002;
 
+const app = express();
+
 app.use(express.urlencoded({ extended: true }));
-app.use('/api', api);
 
 // express.json will allow for any json to be parsed through so we can do something with it!
 app.use(express.json());
 
 // express middleware for static assets (front-end files) in the public directory!
 app.use(express.static('public'));
-
-// get routes!
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/index.html'));
-});
-
-app.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/pages/notes.html'));
-});
+app.use(apiRoutes);
+app.use(homeRoutes);
 
 // Listening! :) "node server.js"
 app.listen(PORT, () =>
