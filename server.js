@@ -26,4 +26,4 @@ app.listen(PORT, () =>
   console.log(`Note Taker app listening at http://127.0.0.1:${PORT}, or http://localhost:${PORT}`)
 );
 
-// Going with proper file structure now.
+// npm run start to invoke server
