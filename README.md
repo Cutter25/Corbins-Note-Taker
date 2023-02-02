@@ -1,3 +1,6 @@
 # Corbins-Note-Taker
+Hello user! I was tasked with creating an express backend to handle notes written by the user within a prebuilt front end. I needed to connect the two ends and deploy the app on Heroku!
 
-Current status: local host 3001 does not want to GET the notes.html files and send it to the user >:( the GET route is set up correctly according to what we learned in class.
+Below is a screenshot and a link to the delpoyed application. Please enjoy!
+
+![Screen Shot 2023-02-02 at 5 04 53 PM](https://user-images.githubusercontent.com/111820384/216460502-e1e05d29-a289-4d07-887b-758ec0ca5338.png)
